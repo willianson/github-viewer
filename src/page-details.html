@@ -1,0 +1,147 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+
+
+<dom-module id="page-details">
+	<template>
+
+
+        <!-- CSS -->
+		<style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
+		<style is="custom-style" include="css-general"></style>
+
+
+
+		<!-- loading -->
+		<div class="loading" hidden="[[!loading]]">
+			<paper-spinner active></paper-spinner>
+		</div>
+
+
+
+        <!-- Overview -->
+		<iron-ajax auto loading="{{loading}}" url="https://api.github.com/repos/globocom/[[project]]" handle-as="json" last-response="{{responseRepositoryDetails}}"></iron-ajax>
+        <paper-card heading="[[project]]" elevation="1">
+			<div class="card-content">
+				<div class="layout horizontal">
+					<div ta-center class="flex-1">
+						<iron-icon op-3 w-60 h-initial icon="icons:star"></iron-icon>
+						<p>
+							<strong fz-36>[[responseRepositoryDetails.stargazers_count]]</strong>
+							<br/>Stars
+						</p>
+					</div>
+					<div ta-center class="flex-1">
+						<iron-icon op-3 w-60 h-initial icon="communication:call-split"></iron-icon>
+						<p>
+							<strong fz-36>[[responseRepositoryDetails.forks]]</strong>
+							<br/>Forks
+						</p>
+					</div>
+				</div>
+			</div>
+        </paper-card>
+
+
+
+        <!-- Commits -->
+		<iron-ajax id="ajaxRepositoryCommits" auto loading="{{loading}}" url="https://api.github.com/repos/globocom/[[project]]/commits" params='{"sort":"newest", "order":"desc", "page":1, "per_page":20}' handle-as="json" on-response="responseCommits"></iron-ajax>
+        <paper-card heading="Commits" elevation="1">
+			<div class="commits-list card-content">
+				<template is="dom-repeat" items="[[commits]]">
+					<article class="layout horizontal">
+						<div class="sha flex-1">
+							<strong>[[item.sha]]</strong>
+						</div>
+						<div class="info flex-6">
+							<p class="message">[[item.commit.message]]</p>
+							<p class="author">[[item.commit.author.name]]</p>
+						</div>
+					</article>
+				</template>
+				
+				<paper-button class="layout horizontal" hidden="[[commits_eof]]" on-click="moreCommits">Load more</paper-button>
+				<p op-3 pt-10 ta-center hidden="[[!commits_eof]]" >No more commits.</p>
+			</div>
+        </paper-card>
+
+
+
+	</template>
+
+
+
+	<script>
+
+		Polymer({
+
+			is: 'page-details',
+
+
+			properties:
+			{
+                commits_eof:
+                {
+                    type: Boolean,
+                    value: false
+                },
+				
+				commits_qty:
+				{
+					value: 20
+				},
+				
+				commits:
+				{
+					type: Array,
+					value: function() {
+						return [];
+					}
+				},
+				
+				current_page:
+				{
+					value: 1
+				},
+				
+				project: {
+					type: String,
+					value: '',
+					observer: '_reset'
+				}
+			},
+
+
+			_reset: function()
+			{
+				this.commits_eof    = false;
+				this.commits        = [];
+				this.current_page   = 1;
+			},
+
+
+			json2str: function(json)
+			{
+				return JSON.stringify(json);
+			},
+
+
+			moreCommits: function() {
+				this.$.ajaxRepositoryCommits.params.page = (++this.current_page);
+				this.$.ajaxRepositoryCommits.generateRequest();
+			},
+
+
+			responseCommits: function(commits)
+			{
+				for (var i = 0; i < commits.detail.response.length; i++)
+					this.push('commits', commits.detail.response[i]);
+
+                this.commits_eof = (i < this.commits_qty);
+			},
+
+		});
+
+	</script>
+
+</dom-module>

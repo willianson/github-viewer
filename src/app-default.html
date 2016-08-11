@@ -1,0 +1,144 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../src/css-general.html">
+
+
+
+<!-- App-default -->
+<dom-module id="app-default">
+	<template>
+
+
+
+		<!-- CSS -->
+		<style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
+		<style is="custom-style" include="css-general"></style>
+
+
+
+		<!-- Location -->
+		<app-location route="{{route}}"></app-location>
+		<app-route route="{{route}}" pattern="/:project" data="{{routeData}}" tail="{{subroute}}"></app-route>
+
+
+
+		<!-- Layout -->
+		<app-drawer-layout fullbleed>
+
+
+			<!-- Left -->
+			<app-drawer id="drawerLeft" swipe-open>
+				<app-toolbar>
+					<h3>Projects</h3>
+				</app-toolbar>
+
+				<iron-ajax auto url="https://api.github.com/search/repositories?q=user:globocom&sort=stars&order=desc" handle-as="json" last-response="{{ajaxRepositories}}"></iron-ajax>
+
+				<iron-selector selected="[[project]]" attr-for-selected="name" class="layout vertical flex drawer-list" role="navigation">
+					<template is="dom-repeat" items="[[ajaxRepositories.items]]">
+						<a name="[[item.name]]" href="/[[item.name]]">
+							<paper-item>
+								<strong>
+									<iron-icon h-initial icon="icons:star"></iron-icon> [[item.stargazers_count]]
+								</strong>
+								: [[item.name]]
+							</paper-item>
+						</a>
+					</template>
+				</iron-selector>
+			</app-drawer>
+
+
+
+			<!-- Main content -->
+			<app-header-layout has-scrolling-region>
+
+
+				<!-- Header -->
+				<app-header effects="waterfall" condensed-title="Discover the world." condenses fixed>
+					<app-toolbar>
+						<paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+						<div title>Github <span fw-100>viewer</span></div>
+					</app-toolbar>
+				</app-header>
+
+
+				<!-- Pages -->
+				<iron-pages role="main" selected="[[project]]" attr-for-selected="project">
+					<page-welcome project="welcome"></page-welcome>
+					<page-details project="[[project]]"></page-details>
+				</iron-pages>
+
+
+			</app-header-layout>
+
+
+		</app-drawer-layout>
+	</template>
+
+
+
+	<script>
+
+		Polymer({
+
+			is: 'app-default',
+
+
+			properties:
+			{
+				project:
+				{
+					type				: String,
+					reflectToAttribute	: true,
+					observer 			: '_pageChanged'
+				},
+			},
+
+
+			observers:
+			[
+				'_routePageChanged(routeData.project)'
+			],
+
+
+			_pageChanged: function(project)
+			{
+				var file = (project == 'welcome') ? 'page-welcome.html' : 'page-details.html';
+					
+				this.importHref(this.resolveUrl(file), null, null, true);
+
+				if (!this.$.drawerLeft.persistent)
+					this.$.drawerLeft.close();
+			},
+
+
+			_routePageChanged: function(project)
+			{
+				this.project = project || 'welcome';
+			},
+
+		});
+
+	</script>
+
+</dom-module>

@@ -1,0 +1,105 @@
+<dom-module id="css-general">
+	<template>
+		<style>
+
+
+			/* common
+			---------------------------------------------------------------------------------------*/
+			body 						{ position:relative; font-family:'Roboto'; }
+			div, p, span, strong 		{ font-family:'Roboto'; }
+			app-header-layout 			{ background-color:#E5E5E5; }
+			main 						{ padding:5%; }
+			a 							{ font-family:'Roboto'; color:#0068AE; text-decoration:none; outline:none; }
+			h1, h2, h3, h4 				{ margin:0; padding:0; font-family:'Roboto'; font-weight:300; }
+
+
+
+			/* loading
+			---------------------------------------------------------------------------------------*/
+			.loading 					{ display:flex; position:fixed; z-index:2; top:0; right:0; bottom:0; left:0; background:rgba(255,255,255,0.95); align-items:center; }
+			.loading paper-spinner 		{ margin:auto; width:48px; height:48px; }
+
+
+
+			/* misc
+			---------------------------------------------------------------------------------------*/
+			[op-3] 						{ opacity:0.3; }
+			[op-5] 						{ opacity:0.5; }
+			[op-9] 						{ opacity:0.9; }
+			[op-10] 					{ opacity:0.10; }
+			[m-auto] 					{ margin:auto; }
+			[mt-5] 						{ margin-top:5px; }
+			[mt-50p] 					{ margin-top:50%; }
+			[pt-10] 					{ padding-top:10px; }
+			[mw-80p] 					{ max-width:80%; }
+			[w-60] 						{ width:60%; }
+			[h-initial] 				{ height:initial; }
+			[fw-100] 					{ font-weight:100; }
+			[fz-36] 					{ font-size:36px; }
+			[ta-center] 				{ text-align:center; }
+			[c-white] 					{ text-align:center; }
+
+
+
+			/* app-header
+			---------------------------------------------------------------------------------------*/
+			app-header 					{ color:#FFF; background:#0068AE; }
+
+
+
+			/* paper-card
+			---------------------------------------------------------------------------------------*/
+			:host {
+				--paper-card: 								{ display:block; margin:15px; }
+				--paper-card-content: 						{  }
+				--paper-card-background-color: #FFF;
+
+				--paper-item: 								{ display:block; margin:0; padding:15px; min-height:initial; border:0; -ms-text-overflow:ellipsis; text-overflow:ellipsis; border-bottom:1px solid rgba(255,255,255,0.1); overflow:hidden; }
+
+				--paper-input-container-underline: 			{ background:#CCC; }
+				--paper-input-container-underline-focus: 	{ background:#0068AE; }
+
+				--app-drawer-content-container: 			{ background-color:#0068AE; }
+			}
+			paper-card paper-item:last-of-type 				{ border-bottom:0; }
+			iron-selector a:last-of-type paper-item 		{ border-bottom:0; }
+
+
+
+			/* drawer-left
+			---------------------------------------------------------------------------------------*/
+			#drawerLeft 									{ padding-bottom:15px; white-space:nowrap; overflow:auto; }
+			#drawerLeft h3 									{ opacity:0.5; color:#FFF; }
+			#drawerLeft iron-selector 						{ height:100%; overflow:auto; }
+			#drawerLeft paper-item 							{ color:rgba(255,255,255,0.6); }
+			#drawerLeft a.iron-selected paper-item 			{ color:rgba(255,255,255,1.0); background-color:rgba(255,255,255,0.1); }
+
+
+
+			/* commits
+			---------------------------------------------------------------------------------------*/
+			.commits-list 									{  }
+			.commits-list article							{ margin:0 0 15px; border-bottom:1px dashed #E5E5E5; }
+			.commits-list article .sha						{  }
+			.commits-list article .sha strong				{ display:block; width:50px; -ms-text-overflow:ellipsis; text-overflow:ellipsis; overflow:hidden; }
+			.commits-list article .info 					{ max-width:80%; overflow:hidden; }
+			.commits-list article .info .message			{ margin:0; padding:0; }
+			.commits-list article .info .author				{ opacity:0.5; display:block; margin-top:5px; }
+
+
+
+            /* pag-welcome
+			---------------------------------------------------------------------------------------*/
+			section.page-welcome 							{ display:flex; position:absolute; z-index:2; top:0; right:0; bottom:0; left:0; align-items:center; }
+			section.page-welcome article 					{ margin:auto; max-width:60%; text-align:center; }
+
+
+		</style>
+	</template>
+
+
+
+	<script>
+		Polymer({ is:'css-general' });
+	</script>
+</dom-module>
