@@ -6,6 +6,7 @@
 	<template>
 
 
+
         <!-- CSS -->
 		<style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
 		<style is="custom-style" include="css-general"></style>
@@ -21,17 +22,17 @@
 
         <!-- Overview -->
 		<iron-ajax auto loading="{{loading}}" url="https://api.github.com/repos/globocom/[[project]]" handle-as="json" last-response="{{responseRepositoryDetails}}"></iron-ajax>
-        <paper-card heading="[[project]]" elevation="1">
+        <paper-card id="overview" heading="[[project]]" elevation="1">
 			<div class="card-content">
 				<div class="layout horizontal">
-					<div ta-center class="flex-1">
+					<div ta-center class="flex-1 item">
 						<iron-icon op-3 w-60 h-initial icon="icons:star"></iron-icon>
 						<p>
 							<strong fz-36>[[responseRepositoryDetails.stargazers_count]]</strong>
 							<br/>Stars
 						</p>
 					</div>
-					<div ta-center class="flex-1">
+					<div ta-center class="flex-1 item">
 						<iron-icon op-3 w-60 h-initial icon="communication:call-split"></iron-icon>
 						<p>
 							<strong fz-36>[[responseRepositoryDetails.forks]]</strong>
