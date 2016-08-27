@@ -5,7 +5,7 @@
 
 			/* common
 			---------------------------------------------------------------------------------------*/
-			body 						{ position:relative; font-family:'Roboto'; }
+			body 						{ z-index:120%; position:relative; font-family:'Roboto'; }
 			div, p, span, strong 		{ font-family:'Roboto'; }
 			app-header-layout 			{ background-color:#E5E5E5; }
 			main 						{ padding:5%; }
@@ -50,7 +50,7 @@
 			/* paper-card
 			---------------------------------------------------------------------------------------*/
 			:host {
-				--paper-card: 								{ display:block; margin:15px; }
+				--paper-card: 								{ display:block; margin:15px auto; width:90%; max-width:660px; }
 				--paper-card-content: 						{  }
 				--paper-card-background-color: #FFF;
 
@@ -72,7 +72,16 @@
 			#drawerLeft h3 									{ opacity:0.5; color:#FFF; }
 			#drawerLeft iron-selector 						{ height:100%; overflow:auto; }
 			#drawerLeft paper-item 							{ color:rgba(255,255,255,0.6); }
+			#drawerLeft paper-item strong 					{ opacity:0.3; }
 			#drawerLeft a.iron-selected paper-item 			{ color:rgba(255,255,255,1.0); background-color:rgba(255,255,255,0.1); }
+			#drawerLeft a.iron-selected paper-item strong 	{ opacity:1; color:rgba(255,255,255,1.0); }
+
+
+
+			/* cverview
+			---------------------------------------------------------------------------------------*/
+			#overview 										{ background:transparent; box-shadow:none; }
+			.item 											{ margin:auto; max-width:150px; }
 
 
 
@@ -80,9 +89,9 @@
 			---------------------------------------------------------------------------------------*/
 			.commits-list 									{  }
 			.commits-list article							{ margin:0 0 15px; border-bottom:1px dashed #E5E5E5; }
-			.commits-list article .sha						{  }
-			.commits-list article .sha strong				{ display:block; width:50px; -ms-text-overflow:ellipsis; text-overflow:ellipsis; overflow:hidden; }
-			.commits-list article .info 					{ max-width:80%; overflow:hidden; }
+			.commits-list article .sha						{ width:20%; }
+			.commits-list article .sha strong				{ display:block; -ms-text-overflow:ellipsis; text-overflow:ellipsis; overflow:hidden; }
+			.commits-list article .info 					{ margin-left:5%; max-width:80%; overflow:hidden; }
 			.commits-list article .info .message			{ margin:0; padding:0; }
 			.commits-list article .info .author				{ opacity:0.5; display:block; margin-top:5px; }
 
@@ -99,7 +108,5 @@
 
 
 
-	<script>
-		Polymer({ is:'css-general' });
-	</script>
+	<script> Polymer({ is:'css-general' }); </script>
 </dom-module>
