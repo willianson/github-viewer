@@ -9,7 +9,6 @@ Version 0.1
 Install [bower](https://bower.io/docs/api#install):
 
     $ npm install -g bower
-    $ bower install
 
 Install [polymer-cli](https://github.com/Polymer/polymer-cli):
 
@@ -20,6 +19,7 @@ Install [polymer-cli](https://github.com/Polymer/polymer-cli):
 This command serves the app at `http://localhost:8080` and provides basic URL
 routing for the app:
 
+    $ bower install
     $ polymer serve
 
 
