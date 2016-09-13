@@ -1,5 +1,5 @@
-# Github Viewer
-Version 1.0
+# Github Viewer in Polymer
+Version 0.1
 
 ### Setup
 
